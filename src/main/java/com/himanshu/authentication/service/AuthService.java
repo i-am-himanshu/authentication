@@ -6,7 +6,9 @@ import com.himanshu.authentication.model.Role;
 import com.himanshu.authentication.model.User;
 import com.himanshu.authentication.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthService {
 
     private final UserRepository userRepository;

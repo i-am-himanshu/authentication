@@ -2,6 +2,7 @@ package com.himanshu.authentication.service;
 
 import com.himanshu.authentication.dto.UserRequest;
 import com.himanshu.authentication.dto.UserResponse;
+import com.himanshu.authentication.exception.UsernameAlreadyExistException;
 import com.himanshu.authentication.model.Role;
 import com.himanshu.authentication.model.User;
 import com.himanshu.authentication.repository.UserRepository;
@@ -34,8 +35,10 @@ public class AuthService {
     public UserResponse registerUser(UserRequest userRequest) {
 
         if(userRepository.findByUsername(userRequest.getUsername()).isPresent()) {
-            throw new RuntimeException("Username already exists");
+            throw new UsernameAlreadyExistException("Username already exists");
         }
+
+
 
         User user = new User();
 

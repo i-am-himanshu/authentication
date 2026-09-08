@@ -33,6 +33,10 @@ public class AuthService {
 
     public UserResponse registerUser(UserRequest userRequest) {
 
+        if(userRepository.findByUsername(userRequest.getUsername()).isPresent()) {
+            throw new RuntimeException("Username already exists");
+        }
+
         User user = new User();
 
         user.setUsername(userRequest.getUsername());

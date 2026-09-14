@@ -7,6 +7,10 @@ public class LoginResponse {
     public LoginResponse() {
     }
 
+    public LoginResponse(String message) {
+        this.message = message;
+    }
+
     public String getMessage() {
         return message;
     }

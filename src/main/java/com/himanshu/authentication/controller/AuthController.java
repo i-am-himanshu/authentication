@@ -1,5 +1,7 @@
 package com.himanshu.authentication.controller;
 
+import com.himanshu.authentication.dto.LoginRequest;
+import com.himanshu.authentication.dto.LoginResponse;
 import com.himanshu.authentication.dto.UserRequest;
 import com.himanshu.authentication.dto.UserResponse;
 import com.himanshu.authentication.service.AuthService;
@@ -21,5 +23,10 @@ public class AuthController {
     @PostMapping("/register")
     public UserResponse registerUser(@RequestBody UserRequest userRequest) {
         return authService.registerUser(userRequest);
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(LoginRequest loginRequest) {
+        return authService.login(loginRequest);
     }
 }

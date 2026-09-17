@@ -8,6 +8,7 @@ import com.himanshu.authentication.exception.UsernameAlreadyExistException;
 import com.himanshu.authentication.model.Role;
 import com.himanshu.authentication.model.User;
 import com.himanshu.authentication.repository.UserRepository;
+import com.himanshu.authentication.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,12 +23,18 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    private final JwtService jwtService;
+
+    public AuthService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder,
+                       AuthenticationManager authenticationManager,
+                       JwtService jwtService) {
+
         this.userRepository = userRepository;
-
         this.passwordEncoder = passwordEncoder;
-
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
+
     }
 
     private UserResponse mapToUserResponse(User user) {
@@ -45,8 +52,6 @@ public class AuthService {
         if(userRepository.findByUsername(userRequest.getUsername()).isPresent()) {
             throw new UsernameAlreadyExistException("Username already exists");
         }
-
-
 
         User user = new User();
 
@@ -71,7 +76,9 @@ public class AuthService {
                 )
         );
 
-        return new LoginResponse("Login Successful");
+        String token = jwtService.generateToken(loginRequest.getUsername());
+
+        return new LoginResponse(token);
     }
 
 }

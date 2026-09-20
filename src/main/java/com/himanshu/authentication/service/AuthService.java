@@ -78,6 +78,8 @@ public class AuthService {
 
         String token = jwtService.generateToken(loginRequest.getUsername());
 
+        // not tested yet
+
         return new LoginResponse(token);
     }
 

@@ -40,7 +40,9 @@ public class SecurityConfig {
                 auth.requestMatchers("/hello",
                                 "/auth/register",
                                 "/auth/login")
-                .permitAll().anyRequest().authenticated())
+                .permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
